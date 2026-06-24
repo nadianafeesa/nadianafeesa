@@ -1,0 +1,26 @@
+name: Generate Pacman Contribution Graph
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate pacman contribution graph
+        uses: abozanona/pacman-contribution-graph@main
+        with:
+          github_user_name: nadianafeesa
+
+      - name: Push generated files
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: pacman-output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
